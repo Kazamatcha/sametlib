@@ -3294,7 +3294,7 @@ do
 
 			local Window = {
 				Name = Data.Name or Data.name or "Bronx Dupe",
-				Logo = Data.Logo or Data.logo or "131203784476184",
+				Logo = Data.Logo or Data.logo or "90363697817722",
 
 				Pages = {},
 				Items = {},
@@ -3365,7 +3365,7 @@ do
 					Name = "\0",
 					ImageColor3 = FromRGB(255, 0, 0),
 					BorderColor3 = FromRGB(0, 0, 0),
-					Image = Window.Logo,
+					Image = "rbxassetid://" .. Window.Logo,
 					BackgroundTransparency = 1,
 					Position = UDim2New(0, 8, 0, 10),
 					Size = UDim2New(0, 18, 0, 18),
