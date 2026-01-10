@@ -195,15 +195,15 @@ do
 
 	local Themes = {
         ["Preset"] = {
-            ["Window Outline"] = FromRGB(10, 37, 0),
-            ["Accent"] = FromRGB(103, 228, 31),
-            ["Background 1"] = FromRGB(22, 27, 17),
+            ["Window Outline"] = FromRGB(255, 255, 255),
+            ["Accent"] = FromRGB(255, 255, 255),
+            ["Background 1"] = FromRGB(0, 0, 0),
             ["Text"] = FromRGB(255, 255, 255),
-            ["Inline"] = FromRGB(22, 31, 19),
-            ["Element"] = FromRGB(36, 48, 32),
-            ["Inactive Text"] = FromRGB(185, 185, 185),
-            ["Border"] =  FromRGB(48, 61, 46),
-            ["Background 2"] = FromRGB(26, 36, 24)
+            ["Inline"] = FromRGB(0, 0, 0),
+            ["Element"] = FromRGB(0, 0, 0),
+            ["Inactive Text"] = FromRGB(255, 255, 255),
+            ["Border"] =  FromRGB(40, 40, 40),
+            ["Background 2"] = FromRGB(0, 0, 0)
         }
 	}
 
@@ -3309,7 +3309,7 @@ do
 					AnchorPoint = Vector2New(0.5, 0.5),
 					Position = UDim2New(0.5, 0, 0.5, 0),
 					BorderColor3 = FromRGB(0, 34, 37),
-					Size = not IsMobile and UDim2New(0, 621, 0, 542) or UDim2New(0, 375, 0, 400),
+					Size = not IsMobile and UDim2New(0, 520, 0, 542) or UDim2New(0, 375, 0, 400),
 					BorderSizePixel = 2,
 					BackgroundColor3 = FromRGB(17, 21, 27),
 				})
