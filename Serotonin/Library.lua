@@ -84,9 +84,9 @@ do
 		FadeSpeed = 0.2,
 
 		Folders = {
-			Directory = "MatchaUniversal",
-			Configs = "MatchaUniversal/Configs",
-			Assets = "MatchaUniversal/Assets",
+			Directory = "uip100",
+			Configs = "uip100/Configs",
+			Assets = "uip100/Assets",
 		},
 
 		-- Ignore below
