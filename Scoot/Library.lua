@@ -221,20 +221,20 @@ local Library do
     }
 
     local Themes = {
-        ["Preset"] = {
-            ["Background"] = FromRGB(14, 17, 15),
-            ["Border"] = FromRGB(12, 12, 12),
-            ["Inline"] = FromRGB(20, 24, 21),
-            ["Hovered Element"] = FromRGB(37, 42, 45),
-            ["Page Background"] = FromRGB(25, 30, 26),
-            ["Outline"] = FromRGB(42, 49, 45),
-            ["Element"] = FromRGB(30, 36, 31),
-            ["Gradient"] = FromRGB(208, 208, 208),
-            ["Text"] = FromRGB(235, 235, 235),
-            ["Text Stroke"] = FromRGB(0, 0, 0),
-            ["Placeholder Text"] = FromRGB(185, 185, 185),
-            ["Accent"] = FromRGB(202, 243, 255)
-        }
+		["Preset"] = {
+		    ["Background"] = FromRGB(250, 248, 245), -- Soft cream
+		    ["Border"] = FromRGB(220, 218, 215),
+		    ["Inline"] = FromRGB(255, 255, 255),
+		    ["Hovered Element"] = FromRGB(200, 220, 195), -- Light matcha
+		    ["Page Background"] = FromRGB(250, 248, 245),
+		    ["Outline"] = FromRGB(220, 218, 215),
+		    ["Element"] = FromRGB(255, 255, 255),
+		    ["Gradient"] = FromRGB(250, 248, 245), -- No real gradient, just base color
+		    ["Text"] = FromRGB(80, 80, 80),
+		    ["Text Stroke"] = FromRGB(255, 255, 255), -- White stroke for light theme
+		    ["Placeholder Text"] = FromRGB(120, 120, 120),
+		    ["Accent"] = FromRGB(147, 179, 141) -- Matcha green
+		}
     }
 
     Library.Theme = TableClone(Themes["Preset"])
