@@ -194,17 +194,17 @@ do
 	}
 
 	local Themes = {
-        ["Preset"] = {
-            ["Window Outline"] = FromRGB(103, 228, 31),
-            ["Accent"] = FromRGB(103, 228, 31),
-            ["Background 1"] = FromRGB(0, 0, 0),
-            ["Text"] = FromRGB(255, 255, 255),
-            ["Inline"] = FromRGB(0, 0, 0),
-            ["Element"] = FromRGB(0, 0, 0),
-            ["Inactive Text"] = FromRGB(255, 255, 255),
-            ["Border"] =  FromRGB(40, 40, 40),
-            ["Background 2"] = FromRGB(0, 0, 0)
-        }
+		["Preset"] = {
+		    ["Window Outline"] = FromRGB(220, 218, 215), -- Light border
+		    ["Accent"] = FromRGB(147, 179, 141), -- Matcha green
+		    ["Background 1"] = FromRGB(250, 248, 245), -- Soft cream
+		    ["Text"] = FromRGB(80, 80, 80), -- Dark text
+		    ["Inline"] = FromRGB(255, 255, 255), -- White
+		    ["Element"] = FromRGB(255, 255, 255), -- White elements
+		    ["Inactive Text"] = FromRGB(120, 120, 120), -- Light gray
+		    ["Border"] = FromRGB(220, 218, 215), -- Border color
+		    ["Background 2"] = FromRGB(200, 220, 195) -- Light matcha for secondary bg
+		}
 	}
 
 	Library.Theme = TableClone(Themes["Preset"])
