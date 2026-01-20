@@ -4784,76 +4784,110 @@ local Library do
         end
     end
 
-    -- Library components
-    Library.Watermark = function(self, Name)
-        local Watermark = { }
+	Library.Watermark = function(self, Name)
+	    local Watermark = { }
+	
+	    local RunService = game:GetService("RunService")
+	    local Stats = game:GetService("Stats")
+	
+	    local Items = { } do 
+	        Items["Watermark"] = Instances:Create("Frame", {
+	            Parent = Library.Holder.Instance,
+	            Name = "\0",
+	            AnchorPoint = Vector2New(0.5, 1),
+	            Position = UDim2New(0.5, 0, 1, -12),
+	            BorderColor3 = FromRGB(12, 12, 12),
+	            BorderSizePixel = 2,
+	            AutomaticSize = Enum.AutomaticSize.XY,
+	            BackgroundColor3 = FromRGB(14, 17, 15)
+	        })  Items["Watermark"]:AddToTheme({BackgroundColor3 = "Background", BorderColor3 = "Border"})
+	
+	        Items["Watermark"]:MakeDraggable()
+	
+	        Instances:Create("UIStroke", {
+	            Parent = Items["Watermark"].Instance,
+	            Name = "\0",
+	            Color = FromRGB(42, 49, 45),
+	            LineJoinMode = Enum.LineJoinMode.Miter,
+	            ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	        }):AddToTheme({Color = "Outline"})
+	
+	        Instances:Create("UIPadding", {
+	            Parent = Items["Watermark"].Instance,
+	            Name = "\0",
+	            PaddingTop = UDimNew(0, 5),
+	            PaddingBottom = UDimNew(0, 7),
+	            PaddingRight = UDimNew(0, 5),
+	            PaddingLeft = UDimNew(0, 5)
+	        })
+	
+	        Items["Text"] = Instances:Create("TextLabel", {
+	            Parent = Items["Watermark"].Instance,
+	            Name = "\0",
+	            FontFace = Library.Font,
+	            TextColor3 = FromRGB(235, 235, 235),
+	            BorderColor3 = FromRGB(0, 0, 0),
+	            Text = Name,
+	            Position = UDim2New(0, 0, 0, 2),
+	            BackgroundTransparency = 1,
+	            TextXAlignment = Enum.TextXAlignment.Left,
+	            BorderSizePixel = 0,
+	            AutomaticSize = Enum.AutomaticSize.XY,
+	            TextSize = 9,
+	            BackgroundColor3 = FromRGB(255, 255, 255)
+	        })  Items["Text"]:AddToTheme({TextColor3 = "Text"})
+	
+	        Items["Text"]:TextBorder()
+	
+	        Items["Liner"] = Instances:Create("Frame", {
+	            Parent = Items["Watermark"].Instance,
+	            Name = "\0",
+	            Position = UDim2New(0, -5, 0, -5),
+	            BorderColor3 = FromRGB(0, 0, 0),
+	            Size = UDim2New(1, 10, 0, 1),
+	            BorderSizePixel = 0,
+	            BackgroundColor3 = FromRGB(202, 243, 255)
+	        })  Items["Liner"]:AddToTheme({BackgroundColor3 = "Accent"})
+	    end
+	
+	    -- SET TEXT
+	    function Watermark:Set(Text)
+	        Items["Text"].Instance.Text = Text
+	    end
+	
+	    function Watermark:SetVisibility(Bool)
+	        Items["Watermark"].Instance.Visible = Bool
+	    end
+	
+	    -- FPS COUNTER
+	    local fps = 0
+	    RunService.RenderStepped:Connect(function()
+	        fps += 1
+	    end)
+	
+	    -- AUTO UPDATE 0.5s
+	    task.spawn(function()
+	        while true do
+	            local ping = math.floor(
+	                Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
+	            )
+	
+	            Watermark:Set(
+	                string.format(
+	                    "Matcha.Vhuy | Ms: %d | Fps: %d",
+	                    ping,
+	                    fps * 2 -- vì update 0.5s
+	                )
+	            )
+	
+	            fps = 0
+	            task.wait(0.5)
+	        end
+	    end)
+	
+	    return Watermark
+	end
 
-        local Items = { } do 
-            Items["Watermark"] = Instances:Create("Frame", {
-                Parent = Library.Holder.Instance,
-                Name = "\0",
-                AnchorPoint = Vector2New(0.5, 1),
-                Position = UDim2New(0.5, 0, 1, -12),
-                BorderColor3 = FromRGB(12, 12, 12),
-                BorderSizePixel = 2,
-                AutomaticSize = Enum.AutomaticSize.XY,
-                BackgroundColor3 = FromRGB(14, 17, 15)
-            })  Items["Watermark"]:AddToTheme({BackgroundColor3 = "Background", BorderColor3 = "Border"})
-
-            Items["Watermark"]:MakeDraggable()
-
-            Instances:Create("UIStroke", {
-                Parent = Items["Watermark"].Instance,
-                Name = "\0",
-                Color = FromRGB(42, 49, 45),
-                LineJoinMode = Enum.LineJoinMode.Miter,
-                ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-            }):AddToTheme({Color = "Outline"})
-
-            Instances:Create("UIPadding", {
-                Parent = Items["Watermark"].Instance,
-                Name = "\0",
-                PaddingTop = UDimNew(0, 5),
-                PaddingBottom = UDimNew(0, 7),
-                PaddingRight = UDimNew(0, 5),
-                PaddingLeft = UDimNew(0, 5)
-            })
-
-            Items["Text"] = Instances:Create("TextLabel", {
-                Parent = Items["Watermark"].Instance,
-                Name = "\0",
-                FontFace = Library.Font,
-                TextColor3 = FromRGB(235, 235, 235),
-                BorderColor3 = FromRGB(0, 0, 0),
-                Text = Name,
-                Position = UDim2New(0, 0, 0, 2),
-                BackgroundTransparency = 1,
-                TextXAlignment = Enum.TextXAlignment.Left,
-                BorderSizePixel = 0,
-                AutomaticSize = Enum.AutomaticSize.XY,
-                TextSize = 9,
-                BackgroundColor3 = FromRGB(255, 255, 255)
-            })  Items["Text"]:AddToTheme({TextColor3 = "Text"})
-
-            Items["Text"]:TextBorder()
-
-            Items["Liner"] = Instances:Create("Frame", {
-                Parent = Items["Watermark"].Instance,
-                Name = "\0",
-                Position = UDim2New(0, -5, 0, -5),
-                BorderColor3 = FromRGB(0, 0, 0),
-                Size = UDim2New(1, 10, 0, 1),
-                BorderSizePixel = 0,
-                BackgroundColor3 = FromRGB(202, 243, 255)
-            })  Items["Liner"]:AddToTheme({BackgroundColor3 = "Accent"})
-        end
-
-        function Watermark:SetVisibility(Bool)
-            Items["Watermark"].Instance.Visible = Bool
-        end
-
-        return Watermark
-    end
 
     Library.KeybindList = function(self)
         local KeybindList = { }
@@ -6379,181 +6413,199 @@ local Library do
         return BlankElement, Items
     end
 
-    Library.CreateSettingsPage = function(self, Window, Watermark, KeybindList)
-        local SettingsPage = Window:Page({Name = "Settings", SubPages = true}) do 
-            local ThemingSubPage = SettingsPage:SubPage({Name = "Theming", Columns = 2}) do 
-                local ThemesSection = ThemingSubPage:Section({Name = "Themes", Side = 1}) do
-                    for Index, Value in Library.Theme do 
-                        ThemesSection:Label(Index):Colorpicker({
-                            Name = Index,
-                            Flag = Index.."Theme",
-                            Default = Value,
-                            Callback = function(Value)
-                                Library.Theme[Index] = Value
-                                Library:ChangeTheme(Index, Value)
-                            end
-                        })
-                    end
-                end
-            end
-
-            local ConfigsSubPage = SettingsPage:SubPage({Name = "Configs", Columns = 2}) do 
-                local ConfigsSection = ConfigsSubPage:Section({Name = "Configs", Side = 1}) do
-                    local ConfigName
-                    local ConfigSelected
-
-                    local ConfigsSearchbox = ConfigsSection:Searchbox({
-                        Name = "SearchboxConfigs",
-                        Flag = "ConfigsSearchobx",
-                        Items = { },
-                        Multi = false,
-                        Callback = function(Value)
-                            ConfigSelected = Value
-                        end
-                    })
-
-                    ConfigsSection:Textbox({
-                        Name = "Config name", 
-                        Default = "", 
-                        Flag = "ConfigName", 
-                        Placeholder = "Enter text", 
-                        Callback = function(Value)
-                            ConfigName = Value
-                        end
-                    })
-
-                    local CreateAndDeleteButton = ConfigsSection:Button()
-
-                    CreateAndDeleteButton:Add("Create", function()
-                        if ConfigName and ConfigName ~= "" then
-                            if not isfile(Library.Folders.Configs .. "/" .. ConfigName .. ".json") then
-                                writefile(Library.Folders.Configs .. "/" .. ConfigName .. ".json", Library:GetConfig())
-                                Library:Notification("Success", "Created config "..ConfigName .. " succesfully", 5)
-                                Library:RefreshConfigsList(ConfigsSearchbox)
-                            else
-                                Library:Notification("Error", "Config with the name "..ConfigName .. " already exists", 5)
-                                return
-                            end
-                        end
-                    end)
-
-                    CreateAndDeleteButton:Add("Delete", function()
-                        if ConfigSelected then
-                            Library:DeleteConfig(ConfigSelected)
-                            Library:Notification("Success", "Deleted config "..ConfigSelected .. " succesfully", 5)
-                            Library:RefreshConfigsList(ConfigsSearchbox)
-                        end
-                    end)
-
-                    local LoadAndSaveButton = ConfigsSection:Button()    
-
-                    LoadAndSaveButton:Add("Load", function()
-                        if ConfigSelected then
-                            local Success, Result = Library:LoadConfig(readfile(Library.Folders.Configs .. "/" .. ConfigSelected))
-
-                            if Success then 
-                                Library:Notification("Success", "Loaded config "..ConfigSelected .. " succesfully", 5)
-                            else
-                                Library:Notification("Error", "Failed to load config "..ConfigSelected .. " report this to the devs:\n"..Result, 5)
-                            end
-                        end
-                    end)
-
-                    LoadAndSaveButton:Add("Save", function()
-                        if ConfigName and ConfigName ~= "" then
-                            writefile(Library.Folders.Configs .. "/" .. ConfigName .. ".json", Library:GetConfig())
-                            Library:Notification("Success", "Saved config "..ConfigName .. " succesfully", 5)
-                            Library:RefreshConfigsList(ConfigsSearchbox)
-                        end
-                    end)
-
-                    Library:RefreshConfigsList(ConfigsSearchbox)
-                end
-            end
-
-            local SettingsSubPage = SettingsPage:SubPage({Name = "Settings", Columns = 2}) do 
-                local SettingsSection = SettingsSubPage:Section({Name = "Settings", Side = 1}) do
-                    SettingsSection:Toggle({
-                        Name = "Watermark",
-                        Flag = "Watermark",
-                        Default = true,
-                        Callback = function(Value)
-                            Watermark:SetVisibility(Value)
-                        end
-                    })
-
-                    SettingsSection:Toggle({
-                        Name = "Keybind list",
-                        Flag = "Keybind list",
-                        Default = true,
-                        Callback = function(Value)
-                            KeybindList:SetVisibility(Value)
-                        end
-                    })
-
-                    SettingsSection:Slider({
-                        Name = "Fade time",
-                        Flag = "FadeTime",
-                        Default = Library.FadeSpeed,
-                        Min = 0,
-                        Max = 1,
-                        Decimals = 0.01,
-                        Callback = function(Value)
-                            Library.FadeSpeed = Value
-                        end
-                    })
-
-                    SettingsSection:Slider({
-                        Name = "Tween time",
-                        Flag = "TweenTime",
-                        Default = Library.Tween.Time,
-                        Min = 0,
-                        Max = 1,
-                        Decimals = 0.01,
-                        Callback = function(Value)
-                            Library.Tween.Time = Value
-                        end
-                    })
-
-                    SettingsSection:Dropdown({
-                        Name = "Tween style",
-                        Flag = "Tween style",
-                        Items = { "Linear", "Quad", "Quart", "Back", "Bounce", "Circular", "Cubic", "Elastic", "Exponential", "Sine", "Quint" },
-                        Default = "Cubic",
-                        Callback = function(Value)
-                            Library.Tween.Style = Enum.EasingStyle[Value]
-                        end
-                    })
-
-                    SettingsSection:Dropdown({
-                        Name = "Tween direction",
-                        Flag = "Tween direction",
-                        Items = { "In", "Out", "InOut" },
-                        Default = "Out",
-                        Callback = function(Value)
-                            Library.Tween.Direction = Enum.EasingDirection[Value]
-                        end
-                    })
-
-                    SettingsSection:Button():Add("Unload", function()
-                        Library:Unload()
-                    end)
-
-                    SettingsSection:Label("UI Keybind"):Keybind({
-                        Name = "Menu keybind",
-                        Flag = "UIKeybind",
-                        Default = Library.MenuKeybind,
-                        Mode = "Toggle",
-                        Callback = function()
-                            Library.MenuKeybind = Library.Flags["UIKeybind"].Key
-                        end
-                    })
-                end
-            end
-        end
-        
-        return SettingsPage
-    end
+	Library.CreateSettingsPage = function(self, Window, Watermark, KeybindList)
+	    local SettingsPage = Window:Page({Name = "Settings", Columns = 2})
+	
+	    -- THEME (SIDE 1)
+	    local ThemeSection = SettingsPage:Section({Name = "Themes", Side = 1}) do
+	        for Index, Value in Library.Theme do 
+	            ThemeSection:Label(Index):Colorpicker({
+	                Name = Index,
+	                Flag = Index.."Theme",
+	                Default = Value,
+	                Callback = function(Value)
+	                    Library.Theme[Index] = Value
+	                    Library:ChangeTheme(Index, Value)
+	                end
+	            })
+	        end
+	    end
+	
+	    -- SETTINGS (SIDE 2)
+	    local SettingsSection = SettingsPage:Section({Name = "Settings", Side = 2}) do
+	        SettingsSection:Toggle({
+	            Name = "Watermark",
+	            Flag = "Watermark",
+	            Default = true,
+	            Callback = function(Value)
+	                Watermark:SetVisibility(Value)
+	            end
+	        })
+	
+	        SettingsSection:Toggle({
+	            Name = "Keybind list",
+	            Flag = "Keybind list",
+	            Default = true,
+	            Callback = function(Value)
+	                KeybindList:SetVisibility(Value)
+	            end
+	        })
+	
+	        SettingsSection:Slider({
+	            Name = "Fade time",
+	            Flag = "FadeTime",
+	            Default = Library.FadeSpeed,
+	            Min = 0,
+	            Max = 1,
+	            Decimals = 0.01,
+	            Callback = function(Value)
+	                Library.FadeSpeed = Value
+	            end
+	        })
+	
+	        SettingsSection:Slider({
+	            Name = "Tween time",
+	            Flag = "TweenTime",
+	            Default = Library.Tween.Time,
+	            Min = 0,
+	            Max = 1,
+	            Decimals = 0.01,
+	            Callback = function(Value)
+	                Library.Tween.Time = Value
+	            end
+	        })
+	
+	        SettingsSection:Dropdown({
+	            Name = "Tween style",
+	            Flag = "Tween style",
+	            Items = { "Linear", "Quad", "Quart", "Back", "Bounce", "Circular", "Cubic", "Elastic", "Exponential", "Sine", "Quint" },
+	            Default = "Cubic",
+	            Callback = function(Value)
+	                Library.Tween.Style = Enum.EasingStyle[Value]
+	            end
+	        })
+	
+	        SettingsSection:Dropdown({
+	            Name = "Tween direction",
+	            Flag = "Tween direction",
+	            Items = { "In", "Out", "InOut" },
+	            Default = "Out",
+	            Callback = function(Value)
+	                Library.Tween.Direction = Enum.EasingDirection[Value]
+	            end
+	        })
+	
+	        -- SERVER BUTTONS
+	        local ServerBtn = SettingsSection:Button()
+	
+	        ServerBtn:Add("Rejoin", function()
+	            game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+	        end)
+	
+	        ServerBtn:Add("Join new server", function()
+	            local HttpService = game:GetService("HttpService")
+	            local TP = game:GetService("TeleportService")
+	
+	            local servers = HttpService:JSONDecode(
+	                game:HttpGet(
+	                    "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"
+	                )
+	            )
+	
+	            for _, v in pairs(servers.data) do
+	                if v.playing < v.maxPlayers then
+	                    TP:TeleportToPlaceInstance(game.PlaceId, v.id)
+	                    break
+	                end
+	            end
+	        end)
+	
+	        ServerBtn:Add("Copy join script", function()
+	            setclipboard(
+	                'game:GetService("TeleportService"):Teleport('..game.PlaceId..')'
+	            )
+	        end)
+	
+	        SettingsSection:Button():Add("Unload", function()
+	            Library:Unload()
+	        end)
+	
+	        SettingsSection:Label("UI Keybind"):Keybind({
+	            Name = "Menu keybind",
+	            Flag = "UIKeybind",
+	            Default = Library.MenuKeybind,
+	            Mode = "Toggle",
+	            Callback = function()
+	                Library.MenuKeybind = Library.Flags["UIKeybind"].Key
+	            end
+	        })
+	    end
+	
+	    -- CONFIGS (SIDE 2)
+	    local ConfigSection = SettingsPage:Section({Name = "Configs", Side = 2}) do
+	        local ConfigName
+	        local ConfigSelected
+	
+	        local ConfigsSearchbox = ConfigSection:Searchbox({
+	            Name = "SearchboxConfigs",
+	            Flag = "ConfigsSearchbox",
+	            Items = {},
+	            Multi = false,
+	            Callback = function(Value)
+	                ConfigSelected = Value
+	            end
+	        })
+	
+	        ConfigSection:Textbox({
+	            Name = "Config name", 
+	            Default = "", 
+	            Flag = "ConfigName", 
+	            Placeholder = "Enter text", 
+	            Callback = function(Value)
+	                ConfigName = Value
+	            end
+	        })
+	
+	        local CreateDelete = ConfigSection:Button()
+	
+	        CreateDelete:Add("Create", function()
+	            if ConfigName and ConfigName ~= "" then
+	                if not isfile(Library.Folders.Configs .. "/" .. ConfigName .. ".json") then
+	                    writefile(Library.Folders.Configs .. "/" .. ConfigName .. ".json", Library:GetConfig())
+	                    Library:Notification("Success", "Created "..ConfigName, 5)
+	                    Library:RefreshConfigsList(ConfigsSearchbox)
+	                end
+	            end
+	        end)
+	
+	        CreateDelete:Add("Delete", function()
+	            if ConfigSelected then
+	                Library:DeleteConfig(ConfigSelected)
+	                Library:Notification("Success", "Deleted "..ConfigSelected, 5)
+	                Library:RefreshConfigsList(ConfigsSearchbox)
+	            end
+	        end)
+	
+	        local LoadSave = ConfigSection:Button()
+	
+	        LoadSave:Add("Load", function()
+	            if ConfigSelected then
+	                Library:LoadConfig(readfile(Library.Folders.Configs.."/"..ConfigSelected))
+	            end
+	        end)
+	
+	        LoadSave:Add("Save", function()
+	            if ConfigName and ConfigName ~= "" then
+	                writefile(Library.Folders.Configs.."/"..ConfigName..".json", Library:GetConfig())
+	                Library:RefreshConfigsList(ConfigsSearchbox)
+	            end
+	        end)
+	
+	        Library:RefreshConfigsList(ConfigsSearchbox)
+	    end
+	
+	    return SettingsPage
+	end
 end
 
 getgenv().Library = Library
