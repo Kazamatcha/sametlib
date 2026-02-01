@@ -2132,18 +2132,18 @@ local Library do
     end
 
     local Themes = {
-		["Preset"] = {
-		    ["Background"] = FromRGB(255, 240, 245),
-		    ["Inline"] = FromRGB(250, 230, 235),
-		    ["Shadow"] = FromRGB(200, 200, 200),
-		    ["Text"] = FromRGB(0, 0, 0),
-		    ["Image"] = FromRGB(0, 0, 0),
-		    ["Dark Gradient"] = FromRGB(255, 182, 193),
-		    ["Inactive Text"] = FromRGB(100, 100, 100),
-		    ["Element"] = FromRGB(255, 228, 225),
-		    ["Accent"] = FromRGB(255, 105, 180),
-		    ["Border"] = FromRGB(220, 220, 220)
-		},
+        ["Preset"] = {
+            ["Background"] = FromRGB(16, 18, 21),
+            ["Inline"] = FromRGB(22, 25, 29),
+            ["Shadow"] = FromRGB(0, 0, 0),
+            ["Text"] = FromRGB(255, 255, 255),
+            ["Image"] = FromRGB(255, 255, 255),
+            ["Dark Gradient"] = FromRGB(211, 211, 211),
+            ["Inactive Text"] = FromRGB(185, 185, 185),
+            ["Element"] = FromRGB(34, 39, 45),
+            ["Accent"] = FromRGB(196, 231, 255),
+            ["Border"] = FromRGB(32, 36, 42)
+        },
 
         ["Halloween"] = {
             ["Background"] = FromRGB(11, 10, 9),
@@ -7240,7 +7240,7 @@ local Library do
                 Logo = Data.Logo or Data.logo or "135215559087473",
                 FadeSpeed = Data.FadeSpeed or Data.fadespeed or 0.2,
                 Version = Data.Version or Data.version or "v1.0.0 alpha",
-                Size = not IsMobile and UDim2New(0, 659, 0, 511) or UDim2New(0, 511, 0, 459),
+                Size = not IsMobile and UDim2New(0, 500, 0, 511) or UDim2New(0, 511, 0, 459),
 
                 Pages = { },
                 SubPages = { },
