@@ -194,7 +194,7 @@ do
 	}
 
 	local Themes = {
-		["Preset"] = {
+		--[[["Preset"] = {
 		    ["Window Outline"] = FromRGB(220, 218, 215), -- Light border
 		    ["Accent"] = FromRGB(147, 179, 141), -- Matcha green
 		    ["Background 1"] = FromRGB(250, 248, 245), -- Soft cream
@@ -204,6 +204,17 @@ do
 		    ["Inactive Text"] = FromRGB(120, 120, 120), -- Light gray
 		    ["Border"] = FromRGB(220, 218, 215), -- Border color
 		    ["Background 2"] = FromRGB(200, 220, 195) -- Light matcha for secondary bg
+		}]]
+		["Preset"] = {
+		    ["Window Outline"] = FromRGB(60, 0, 0),       -- đỏ đậm viền
+		    ["Accent"] = FromRGB(255, 40, 40),            -- đỏ tươi
+		    ["Background 1"] = FromRGB(28, 8, 8),         -- nền đỏ rất tối
+		    ["Text"] = FromRGB(255, 255, 255),            -- chữ trắng
+		    ["Inline"] = FromRGB(35, 10, 10),             -- đỏ tối
+		    ["Element"] = FromRGB(55, 15, 15),            -- đỏ dark
+		    ["Inactive Text"] = FromRGB(190, 190, 190),   -- chữ mờ
+		    ["Border"] = FromRGB(90, 20, 20),             -- viền đỏ
+		    ["Background 2"] = FromRGB(40, 12, 12)        -- nền phụ đỏ
 		}
 	}
 
