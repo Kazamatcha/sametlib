@@ -84,9 +84,9 @@ do
 		FadeSpeed = 0.2,
 
 		Folders = {
-			Directory = "uip100",
-			Configs = "uip100/Configs",
-			Assets = "uip100/Assets",
+			Directory = "vlad soul",
+			Configs = "vlad soul/Configs",
+			Assets = "vlad soul/Assets",
 		},
 
 		-- Ignore below
@@ -5266,7 +5266,6 @@ do
 						Library:Unload()
 					end,
 				})
-
 				SettingsSection:Toggle({
 					Name = "Watermark",
 					Flag = "Watermark",
@@ -5275,7 +5274,6 @@ do
 						Watermark:SetVisibility(Value)
 					end,
 				})
-
 				SettingsSection:Toggle({
 					Name = "Keybind List",
 					Flag = "Keybind list",
@@ -5284,7 +5282,6 @@ do
 						KeybindList:SetVisibility(Value)
 					end,
 				})
-
 				SettingsSection:Label("Menu Keybind"):Keybind({
 					Name = "Menu Keybind",
 					Flag = "MenuKeybind",
@@ -5295,12 +5292,11 @@ do
 					end,
 				})
 			end
-
+		
 			local ConfigsSection = SettingsPage:Section({ Name = "Configs", Side = 2 })
 			do
 				local ConfigName
 				local ConfigSelected
-
 				local ConfigsSearchbox = ConfigsSection:Dropdown({
 					Name = "Profiles list",
 					Flag = "Profiles list",
@@ -5310,7 +5306,6 @@ do
 						ConfigSelected = Value
 					end,
 				})
-
 				ConfigsSection:Textbox({
 					Name = "Config name",
 					Default = "",
@@ -5320,7 +5315,6 @@ do
 						ConfigName = Value
 					end,
 				})
-
 				ConfigsSection:Button({
 					Name = "Create",
 					Callback = function()
@@ -5333,7 +5327,6 @@ do
 						end
 					end,
 				})
-
 				ConfigsSection:Button({
 					Name = "Delete",
 					Callback = function()
@@ -5344,7 +5337,6 @@ do
 						end
 					end,
 				})
-
 				ConfigsSection:Button({
 					Name = "Load",
 					Callback = function()
@@ -5360,7 +5352,6 @@ do
 						end
 					end,
 				})
-
 				ConfigsSection:Button({
 					Name = "Save",
 					Callback = function()
@@ -5370,17 +5361,15 @@ do
 						end
 					end,
 				})
-
 				ConfigsSection:Button({
 					Name = "Refresh",
 					Callback = function()
 						Library:RefreshConfigsList(ConfigsSearchbox)
 					end,
 				})
-
 				Library:RefreshConfigsList(ConfigsSearchbox)
 			end
-
+		
 			local ThemingSection = SettingsPage:Section({ Name = "Theming", Side = 2 })
 			do
 				for Index, Value in Library.Theme do
@@ -5393,6 +5382,83 @@ do
 						end,
 					})
 				end
+			end
+		
+			local OtherSection = SettingsPage:Section({ Name = "Other", Side = 1 })
+			do
+				local AntiAFKConnection
+		
+				OtherSection:Button({
+					Name = "Copy Script Join",
+					Callback = function()
+						local scriptText = string.format([[game:GetService("TeleportService"):TeleportToPlaceInstance(%d, "%s")]], game.PlaceId, game.JobId)
+						setclipboard(scriptText)
+						Library:Notification("copied script join to clipboard!", 5)
+					end,
+				})
+		
+				OtherSection:Button({
+					Name = "Rejoin",
+					Callback = function()
+						game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId)
+					end,
+				})
+		
+				OtherSection:Button({
+					Name = "Join New Server",
+					Callback = function()
+						game:GetService("TeleportService"):Teleport(game.PlaceId)
+					end,
+				})
+		
+				OtherSection:Button({
+					Name = "Copy Pos XYZ",
+					Callback = function()
+						local char = game.Players.LocalPlayer.Character
+						if char and char:FindFirstChild("HumanoidRootPart") then
+							local pos = char.HumanoidRootPart.Position
+							local posStr = string.format("Vector3.new(%.2f, %.2f, %.2f)", pos.X, pos.Y, pos.Z)
+							setclipboard(posStr)
+							Library:Notification("copied pos xyz", 5)
+						end
+					end,
+				})
+		
+				OtherSection:Button({
+					Name = "Copy Local Velocity",
+					Callback = function()
+						local char = game.Players.LocalPlayer.Character
+						if char and char:FindFirstChild("HumanoidRootPart") then
+							local vel = char.HumanoidRootPart.Velocity
+							local velStr = string.format("Vector3.new(%.2f, %.2f, %.2f)", vel.X, vel.Y, vel.Z)
+							setclipboard(velStr)
+							Library:Notification("copied velocity character", 5)
+						end
+					end,
+				})
+		
+				OtherSection:Toggle({
+					Name = "Anti AFK",
+					Flag = "AntiAFK",
+					Default = false,
+					Callback = function(Value)
+						if Value then
+							if not AntiAFKConnection then
+								local vu = game:GetService("VirtualUser")
+								AntiAFKConnection = game.Players.LocalPlayer.Idled:Connect(function()
+									vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+									wait(1)
+									vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+								end)
+							end
+						else
+							if AntiAFKConnection then
+								AntiAFKConnection:Disconnect()
+								AntiAFKConnection = nil
+							end
+						end
+					end,
+				})
 			end
 		end
 	end
