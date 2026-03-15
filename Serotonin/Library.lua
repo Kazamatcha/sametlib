@@ -3320,7 +3320,7 @@ do
 					AnchorPoint = Vector2New(0.5, 0.5),
 					Position = UDim2New(0.5, 0, 0.5, 0),
 					BorderColor3 = FromRGB(0, 34, 37),
-					Size = not IsMobile and UDim2New(0, 520, 0, 542) or UDim2New(0, 375, 0, 400),
+					Size = not IsMobile and UDim2New(0, 520, 0, 542) or UDim2New(0, 350, 0, 360),
 					BorderSizePixel = 2,
 					BackgroundColor3 = FromRGB(17, 21, 27),
 				})
