@@ -1508,10 +1508,10 @@ local Library do
         },
 
         Folders = {
-            Directory = "kiwisense",
-            Configs = "kiwisense/Configs",
-            Assets = "kiwisense/Assets",
-            Themes = "kiwisense/Themes"
+            Directory = "matcha latte",
+            Configs = "matcha latte/Configs",
+            Assets = "matcha latte/Assets",
+            Themes = "matcha latte/Themes"
         },
 
         Images = { -- you're welcome to reupload the images and replace it with your own links
@@ -2132,18 +2132,18 @@ local Library do
     end
 
     local Themes = {
-        ["Preset"] = {
-            ["Background"] = FromRGB(16, 18, 21),
-            ["Inline"] = FromRGB(22, 25, 29),
-            ["Shadow"] = FromRGB(0, 0, 0),
-            ["Text"] = FromRGB(255, 255, 255),
-            ["Image"] = FromRGB(255, 255, 255),
-            ["Dark Gradient"] = FromRGB(211, 211, 211),
-            ["Inactive Text"] = FromRGB(185, 185, 185),
-            ["Element"] = FromRGB(34, 39, 45),
-            ["Accent"] = FromRGB(196, 231, 255),
-            ["Border"] = FromRGB(32, 36, 42)
-        },
+		["Preset"] = {
+		    ["Background"] = FromRGB(24, 30, 27),
+		    ["Inline"] = FromRGB(34, 44, 38),
+		    ["Shadow"] = FromRGB(0, 0, 0),
+		    ["Text"] = FromRGB(245, 252, 240),
+		    ["Image"] = FromRGB(245, 252, 240),
+		    ["Dark Gradient"] = FromRGB(120, 170, 110),
+		    ["Inactive Text"] = FromRGB(140, 155, 140),
+		    ["Element"] = FromRGB(44, 58, 50),
+		    ["Accent"] = FromRGB(120, 200, 110),
+		    ["Border"] = FromRGB(80, 110, 90)
+		},
 
         ["Halloween"] = {
             ["Background"] = FromRGB(11, 10, 9),
@@ -7236,7 +7236,7 @@ local Library do
             Data = Data or { }
 
             local Window = {
-                Name = Data.Name or Data.name or "kiwisense",
+                Name = Data.Name or Data.name or "matcha latte",
                 Logo = Data.Logo or Data.logo or "135215559087473",
                 FadeSpeed = Data.FadeSpeed or Data.fadespeed or 0.2,
                 Version = Data.Version or Data.version or "v1.0.0 alpha",
