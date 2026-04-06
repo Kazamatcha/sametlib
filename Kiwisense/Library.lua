@@ -2425,31 +2425,20 @@ local Library do
         end
     end
 
-    Library.RefreshConfigsList = function(self, Element)
-        local CurrentList = { }
-        local List = { }
-
-        local ConfigFolderName = StringGSub(Library.Folders.Configs, Library.Folders.Directory .. "/", "")
-
-        for Index, Value in listfiles(Library.Folders.Configs) do
-            local FileName = StringGSub(Value, Library.Folders.Directory .. "\\" .. ConfigFolderName .. "\\", "")
-            List[Index] = FileName
-        end
-
-        local IsNew = #List ~= CurrentList
-
-        if not IsNew then
-            for Index = 1, #List do
-                if List[Index] ~= CurrentList[Index] then
-                    IsNew = true
-                    break
-                end
-            end
-        else
-            CurrentList = List
-            Element:Refresh(CurrentList)
-        end
-    end
+	Library.RefreshConfigsList = function(self, Element)
+	    local List = { }
+	    local ConfigFolderName = StringGSub(Library.Folders.Configs, Library.Folders.Directory .. "/", "")
+	
+	    for _, Path in pairs(listfiles(Library.Folders.Configs)) do
+	        if isfile(Path) and Path:sub(-5) == ".json" then
+	            local FileName = Path:match("[^\\]+$") -- lấy tên file
+	            FileName = FileName:gsub(".json", "") -- bỏ .json
+	            table.insert(List, FileName)
+	        end
+	    end
+	
+	    Element:Refresh(List)
+	end
 
     Library.ChangeItemTheme = function(self, Item, Properties)
         Item = Item.Instance or Item
@@ -2547,31 +2536,19 @@ local Library do
         end
     end
 
-    Library.RefreshThemesList = function(self, Element)
-        local CurrentList = { }
-        local List = { }
-
-        local ConfigFolderName = StringGSub(Library.Folders.Themes, Library.Folders.Directory .. "/", "")
-
-        for Index, Value in listfiles(Library.Folders.Themes) do
-            local FileName = StringGSub(Value, Library.Folders.Directory .. "\\" .. ConfigFolderName .. "\\", "")
-            List[Index] = FileName
-        end
-
-        local IsNew = #List ~= CurrentList
-
-        if not IsNew then
-            for Index = 1, #List do
-                if List[Index] ~= CurrentList[Index] then
-                    IsNew = true
-                    break
-                end
-            end
-        else
-            CurrentList = List
-            Element:Refresh(CurrentList)
-        end
-    end
+	Library.RefreshThemesList = function(self, Element)
+	    local List = { }
+	
+	    for _, Path in pairs(listfiles(Library.Folders.Themes)) do
+	        if isfile(Path) and Path:sub(-5) == ".json" then
+	            local FileName = Path:match("[^\\]+$")
+	            FileName = FileName:gsub(".json", "")
+	            table.insert(List, FileName)
+	        end
+	    end
+	
+	    Element:Refresh(List)
+	end
 
     Library.GetLighterColor = function(self, Color, Increment)
         local Hue, Saturation, Value = Color:ToHSV()
