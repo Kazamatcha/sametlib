@@ -2356,7 +2356,7 @@ local Library do
         local Config = { } 
 
         local Success, Result = Library:SafeCall(function()
-            for Index, Value in pairs(Library.Theme) do
+            for Index, Value in Library.Flags do 
                 if type(Value) == "table" and Value.Key then
                     Config[Index] = {Key = tostring(Value.Key), Mode = Value.Mode}
                 elseif type(Value) == "table" and Value.Color then
@@ -2425,20 +2425,31 @@ local Library do
         end
     end
 
-	Library.RefreshConfigsList = function(self, Element)
-	    local List = { }
-	    local ConfigFolderName = StringGSub(Library.Folders.Configs, Library.Folders.Directory .. "/", "")
-	
-	    for _, Path in pairs(listfiles(Library.Folders.Configs)) do
-	        if isfile(Path) and Path:sub(-5) == ".json" then
-	            local FileName = Path:match("[^\\]+$") -- lấy tên file
-	            FileName = FileName:gsub(".json", "") -- bỏ .json
-	            table.insert(List, FileName)
-	        end
-	    end
-	
-	    Element:Refresh(List)
-	end
+    Library.RefreshConfigsList = function(self, Element)
+        local CurrentList = { }
+        local List = { }
+
+        local ConfigFolderName = StringGSub(Library.Folders.Configs, Library.Folders.Directory .. "/", "")
+
+        for Index, Value in listfiles(Library.Folders.Configs) do
+            local FileName = StringGSub(Value, Library.Folders.Directory .. "\\" .. ConfigFolderName .. "\\", "")
+            List[Index] = FileName
+        end
+
+        local IsNew = #List ~= CurrentList
+
+        if not IsNew then
+            for Index = 1, #List do
+                if List[Index] ~= CurrentList[Index] then
+                    IsNew = true
+                    break
+                end
+            end
+        else
+            CurrentList = List
+            Element:Refresh(CurrentList)
+        end
+    end
 
     Library.ChangeItemTheme = function(self, Item, Properties)
         Item = Item.Instance or Item
