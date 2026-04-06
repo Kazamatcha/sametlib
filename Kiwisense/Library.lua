@@ -2138,7 +2138,7 @@ local Library do
 		    ["Shadow"] = FromRGB(0, 0, 0),
 		    ["Text"] = FromRGB(245, 252, 240),
 		    ["Image"] = FromRGB(245, 252, 240),
-		    ["Dark Gradient"] = FromRGB(120, 170, 110),
+		    ["Dark Gradient"] = FromRGB(90, 110, 95),
 		    ["Inactive Text"] = FromRGB(140, 155, 140),
 		    ["Element"] = FromRGB(44, 58, 50),
 		    ["Accent"] = FromRGB(120, 200, 110),
