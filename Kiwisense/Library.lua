@@ -7103,7 +7103,7 @@ local Library do
                     ImageColor3 = FromRGB(196, 231, 255),
                     ScaleType = Enum.ScaleType.Fit,
                     BorderColor3 = FromRGB(0, 0, 0),
-                    Image = "rbxassetid://89224403789635",
+                    Image = "rbxassetid://119079826703558",
                     BackgroundTransparency = 1,
                     Size = UDim2New(0, 22, 0, 22),
                     BorderSizePixel = 0,
