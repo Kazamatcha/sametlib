@@ -2356,7 +2356,7 @@ local Library do
         local Config = { } 
 
         local Success, Result = Library:SafeCall(function()
-            for Index, Value in Library.Flags do 
+            for Index, Value in pairs(Library.Theme) do
                 if type(Value) == "table" and Value.Key then
                     Config[Index] = {Key = tostring(Value.Key), Mode = Value.Mode}
                 elseif type(Value) == "table" and Value.Color then
@@ -2491,7 +2491,7 @@ local Library do
         local Config = { } 
 
         local Success, Result = Library:SafeCall(function()
-            for Index, Value in Library.Flags do 
+            for Index, Value in pairs(Library.Theme) do
                 if type(Value) == "table" and Value.Color and StringFind(Index, "Theme") then
                     Config[Index] = {Color = "#" .. Value.Color, Alpha = Value.Alpha}
                 end
