@@ -5286,7 +5286,7 @@ do
 				})
 			end
 
-			local ConfigsSection = ConfigsPage:Section({ Name = "Configs" })
+			local ConfigsSection = ConfigsPage:Section({ Name = "Configs", Side = 1 })
 			do
 				local ConfigName
 				local ConfigSelected
