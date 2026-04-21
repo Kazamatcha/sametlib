@@ -84,9 +84,9 @@ do
 		FadeSpeed = 0.2,
 
 		Folders = {
-			Directory = "uip100",
-			Configs = "uip100/Configs",
-			Assets = "uip100/Assets",
+			Directory = "serotonin",
+			Configs = "serotonin/Configs",
+			Assets = "serotonin/Assets",
 		},
 
 		-- Ignore below
@@ -5286,7 +5286,7 @@ do
 				})
 			end
 
-			local ConfigsSection = ConfigsPage:Section({ Name = "Configs", Side = 2 })
+			local ConfigsSection = ConfigsPage:Section({ Name = "Configs" })
 			do
 				local ConfigName
 				local ConfigSelected
