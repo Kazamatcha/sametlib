@@ -5246,7 +5246,7 @@ do
 		end
 
 		Library.CreateSettingsPage = function(self, Window, KeybindList, Watermark)
-			local SettingsPage = Window:Page({ Name = "Settings", Columns = 2 })
+			local SettingsPage = Window:Page({ Name = "Settings & Configs", Columns = 2 })
 			local SettingsSection = SettingsPage:Section({ Name = "Settings", Side = 1 })
 			do
 				SettingsSection:Button({
@@ -5383,6 +5383,82 @@ do
 					})
 				end
 			end
+			local OtherSection = SettingsPage:Section({ Name = "Other", Side = 1 })
+			do
+				local AntiAFKConnection
+		
+				OtherSection:Button({
+					Name = "Copy Script Join",
+					Callback = function()
+						local scriptText = string.format([[game:GetService("TeleportService"):TeleportToPlaceInstance(%d, "%s")]], game.PlaceId, game.JobId)
+						setclipboard(scriptText)
+						Library:Notification("copied script join to clipboard!", 5)
+					end,
+				})
+		
+				OtherSection:Button({
+					Name = "Rejoin",
+					Callback = function()
+						game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId)
+					end,
+				})
+		
+				OtherSection:Button({
+					Name = "Join New Server",
+					Callback = function()
+						game:GetService("TeleportService"):Teleport(game.PlaceId)
+					end,
+				})
+		
+				OtherSection:Button({
+					Name = "Copy Pos XYZ",
+					Callback = function()
+						local char = game.Players.LocalPlayer.Character
+						if char and char:FindFirstChild("HumanoidRootPart") then
+							local pos = char.HumanoidRootPart.Position
+							local posStr = string.format("Vector3.new(%.2f, %.2f, %.2f)", pos.X, pos.Y, pos.Z)
+							setclipboard(posStr)
+							Library:Notification("copied pos xyz", 5)
+						end
+					end,
+				})
+		
+				OtherSection:Button({
+					Name = "Copy Local Velocity",
+					Callback = function()
+						local char = game.Players.LocalPlayer.Character
+						if char and char:FindFirstChild("HumanoidRootPart") then
+							local vel = char.HumanoidRootPart.Velocity
+							local velStr = string.format("Vector3.new(%.2f, %.2f, %.2f)", vel.X, vel.Y, vel.Z)
+							setclipboard(velStr)
+							Library:Notification("copied velocity character", 5)
+						end
+					end,
+				})
+		
+				OtherSection:Toggle({
+					Name = "Anti AFK",
+					Flag = "AntiAFK",
+					Default = false,
+					Callback = function(Value)
+						if Value then
+							if not AntiAFKConnection then
+								local vu = game:GetService("VirtualUser")
+								AntiAFKConnection = game.Players.LocalPlayer.Idled:Connect(function()
+									vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+									wait(1)
+									vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+								end)
+							end
+						else
+							if AntiAFKConnection then
+								AntiAFKConnection:Disconnect()
+								AntiAFKConnection = nil
+							end
+						end
+					end,
+				})
+			end							
 		end
 	end
 end
