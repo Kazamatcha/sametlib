@@ -4222,6 +4222,8 @@ do
 				Decimals = Data.Decimals or Data.decimals or 1,
 				Suffix = Data.Suffix or Data.suffix or "",
 				Max = Data.Max or Data.max or 100,
+		        MinText = Data.MinText or Data.mintext or nil,  
+		        MaxText = Data.MaxText or Data.maxtext or nil,
 				Default = Data.Default or Data.Default or 0,
 				Callback = Data.Callback or Data.callback or function() end,
 
@@ -4332,24 +4334,33 @@ do
 			end
 
 			function Slider:Set(Value)
-				Slider.Value = MathClamp(Library:Round(Value, Slider.Decimals), Slider.Min, Slider.Max)
-				Library.Flags[Slider.Flag] = Slider.Value
+			    Slider.Value = MathClamp(Library:Round(Value, Slider.Decimals), Slider.Min, Slider.Max)
+			    Library.Flags[Slider.Flag] = Slider.Value
+			
+			    Items["Accent"]:Tween(
+			        TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
+			        { Size = UDim2New((Slider.Value - Slider.Min) / (Slider.Max - Slider.Min), -2, 1, -2) }
+			    )
 
-				Items["Accent"]:Tween(
-					TweenInfo.new(Library.Tween.Time, Enum.EasingStyle.Quart, Enum.EasingDirection.Out),
-					{ Size = UDim2New((Slider.Value - Slider.Min) / (Slider.Max - Slider.Min), -2, 1, -2) }
-				)
-				Items["Value"].Instance.Text = StringFormat("%s%s", Slider.Value, Slider.Suffix)
+			    local DisplayValue = tostring(Slider.Value)
+			    
+			    if Slider.MinText and Slider.Value <= Slider.Min then
+			        DisplayValue = Slider.MinText
+			    elseif Slider.MaxText and Slider.Value >= Slider.Max then
+			        DisplayValue = Slider.MaxText
+			    end
+			
+			    Items["Value"].Instance.Text = StringFormat("%s%s", DisplayValue, Slider.Suffix)
 
-				if Slider.Value <= Slider.Min then
-					Items["Accent"].Instance.Visible = false
-				else
-					Items["Accent"].Instance.Visible = true
-				end
-
-				if Slider.Callback then
-					Library:SafeCall(Slider.Callback, Slider.Value)
-				end
+			    if Slider.Value <= Slider.Min then
+			        Items["Accent"].Instance.Visible = false
+			    else
+			        Items["Accent"].Instance.Visible = true
+			    end
+			
+			    if Slider.Callback then
+			        Library:SafeCall(Slider.Callback, Slider.Value)
+			    end
 			end
 
 			local InputChanged
