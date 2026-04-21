@@ -5246,7 +5246,8 @@ do
 		end
 
 		Library.CreateSettingsPage = function(self, Window, KeybindList, Watermark)
-			local SettingsPage = Window:Page({ Name = "Settings & Configs", Columns = 2 })
+			local SettingsPage = Window:Page({ Name = "Settings", Columns = 2 })
+            local ConfigsPage = Window:Page({ Name = "Configs", Columns = 1 })
 			local SettingsSection = SettingsPage:Section({ Name = "Settings", Side = 1 })
 			do
 				SettingsSection:Button({
@@ -5285,7 +5286,7 @@ do
 				})
 			end
 
-			local ConfigsSection = SettingsPage:Section({ Name = "Configs", Side = 2 })
+			local ConfigsSection = ConfigsPage:Section({ Name = "Configs", Side = 2 })
 			do
 				local ConfigName
 				local ConfigSelected
@@ -5386,11 +5387,14 @@ do
 			local OtherSection = SettingsPage:Section({ Name = "Other", Side = 1 })
 			do
 				local AntiAFKConnection
-		
+		        local TeleportService = cloneref(game:GetService("TeleportService"))
+                local Players = cloneref(game:GetService("Players"))
+
 				OtherSection:Button({
 					Name = "Copy Script Join",
 					Callback = function()
-						local scriptText = string.format([[game:GetService("TeleportService"):TeleportToPlaceInstance(%d, "%s")]], game.PlaceId, game.JobId)
+						local scriptText = string.format([[local TS = cloneref(game:GetService("TeleportService"))
+    TS:TeleportToPlaceInstance(%d, "%s", cloneref(game:GetService("Players")).LocalPlayer)]], game.PlaceId, game.JobId)
 						setclipboard(scriptText)
 						Library:Notification("copied script join to clipboard!", 5)
 					end,
@@ -5399,14 +5403,14 @@ do
 				OtherSection:Button({
 					Name = "Rejoin",
 					Callback = function()
-						game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId)
+						TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, Players.LocalPlayer)
 					end,
 				})
 		
 				OtherSection:Button({
 					Name = "Join New Server",
 					Callback = function()
-						game:GetService("TeleportService"):Teleport(game.PlaceId)
+						TeleportService:Teleport(game.PlaceId)
 					end,
 				})
 		
