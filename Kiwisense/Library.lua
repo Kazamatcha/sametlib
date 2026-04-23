@@ -9479,9 +9479,8 @@ local Library do
 		        Callback = Data.Callback or Data.callback or function() end,
 		        Sliding = false,
 		        Value = 0,
-		        -- THÊM 2 THUỘC TÍNH MỚI ĐỂ CUSTOM TEXT (theo yêu cầu của bạn)
-		        MinText = Data.MinText or Data.mintext or nil,     -- ví dụ: "unlimited"
-		        MaxText = Data.MaxText or Data.maxtext or nil,     -- ví dụ: "max" hoặc sau này "automatic"
+		        MinText = Data.MinText or Data.mintext or nil,   
+		        MaxText = Data.MaxText or Data.maxtext or nil,
 		    }
 		    local Items = { } do
 		        Items["Slider"] = Instances:Create("Frame", {
