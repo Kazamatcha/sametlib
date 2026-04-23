@@ -2352,104 +2352,117 @@ local Library do
         self.ThemeMap[Item] = ThemeData
     end
 
-    Library.GetConfig = function(self)
-        local Config = { } 
+	local CurrentList = {}
+	
+	Library.GetConfig = function(self)
+	    local config = {}
+	
+	    for k, v in pairs(Library.Flags) do
+	        if type(v) == "table" then
+	            if v.Key then
+	                config[k] = {Key = tostring(v.Key), Mode = v.Mode}
+	            elseif v.Color then
+	                local c = v.Color
+	                local hex = typeof(c) == "Color3"
+	                    and string.format("#%02X%02X%02X", c.R*255, c.G*255, c.B*255)
+	                    or tostring(c)
+	                config[k] = {Color = hex, Alpha = v.Alpha}
+	            else
+	                config[k] = v
+	            end
+	        else
+	            config[k] = v
+	        end
+	    end
+	
+	    return HttpService:JSONEncode(config)
+	end
 
-        local Success, Result = Library:SafeCall(function()
-            for Index, Value in Library.Flags do 
-                if type(Value) == "table" and Value.Key then
-                    Config[Index] = {Key = tostring(Value.Key), Mode = Value.Mode}
-                elseif type(Value) == "table" and Value.Color then
-                    Config[Index] = {Color = "#" .. Value.Color, Alpha = Value.Alpha}
-                else
-                    Config[Index] = Value
-                end
-            end
-        end)
-
-        return HttpService:JSONEncode(Config)
-    end
-
-    Library.LoadConfig = function(self, Config)
-        local Decoded = HttpService:JSONDecode(Config)
-
-        local Success, Result = Library:SafeCall(function()
-            for Index, Value in Decoded do 
-                local SetFunction = Library.SetFlags[Index]
-
-                if not SetFunction then
-                    continue
-                end
-
-                if type(Value) == "table" and Value.Key then 
-                    SetFunction(Value)
-                elseif type(Value) == "table" and Value.Color then
-                    SetFunction(Value.Color, Value.Alpha)
-                else
-                    SetFunction(Value)
-                end
-            end
-        end)
-
-        return Success, Result
-    end
+	Library.LoadConfig = function(self, configStr)
+	    local ok, decoded = pcall(HttpService.JSONDecode, HttpService, configStr)
+	    if not ok or type(decoded) ~= "table" then return false, "Invalid config" end
+	
+	    return Library:SafeCall(function()
+	        for k, v in pairs(decoded) do
+	            local set = Library.SetFlags[k]
+	            if not set then continue end
+	
+	            if type(v) == "table" then
+	                if v.Key then
+	                    set(v)
+	                elseif v.Color then
+	                    local col = v.Color
+	                    if typeof(col) == "string" and col:sub(1,1) == "#" then
+	                        local r,g,b = tonumber(col:sub(2,3),16), tonumber(col:sub(4,5),16), tonumber(col:sub(6,7),16)
+	                        col = Color3.fromRGB(r,g,b)
+	                    end
+	                    set(col, v.Alpha)
+	                else
+	                    set(v)
+	                end
+	            else
+	                set(v)
+	            end
+	        end
+	    end)
+	end
 
     Library.GetDarkerColor = function(self, Color)
         local Hue, Saturation, Value = Color:ToHSV()
         return FromHSV(Hue, Saturation, Value / 1.35)
     end
 
-    Library.DeleteConfig = function(self, Config)
-        if isfile(Library.Folders.Configs .. "/" .. Config) then 
-            delfile(Library.Folders.Configs .. "/" .. Config)
+    Library.DeleteConfig = function(self, name)
+	    local path = Library.Folders.Configs .. "/" .. name .. ".json"
+	    if isfile(path) then
+	        delfile(path)
             Library:Notification({
                 Name = "Success",
-                Description = "Succesfully deleted config: ".. Config .. ".json",
+                Description = "Succesfully deleted config: ".. name .. ".json",
                 Duration = 5,
                 Icon = "116339777575852",
                 IconColor = FromRGB(52, 255, 164)
             })
-        end
+	    end
     end
 
-    Library.SaveConfig = function(self, Config)
-        if isfile(Library.Folders.Configs .. "/" .. Config .. ".json") then
-            writefile(Library.Folders.Configs .. "/" .. Config .. ".json", Library:GetConfig())
-            Library:Notification({
-                Name = "Success",
-                Description = "Succesfully saved config: ".. Config .. ".json",
-                Duration = 5,
-                Icon = "116339777575852",
-                IconColor = FromRGB(52, 255, 164)
-            })
-        end
+    Library.SaveConfig = function(self, name)
+	    local path = Library.Folders.Configs .. "/" .. name .. ".json"
+	    writefile(path, Library:GetConfig())
+		Library:Notification({
+			Name = "Success",
+			Description = "Succesfully saved config: ".. name .. ".json",
+			Duration = 5,
+			Icon = "116339777575852",
+			IconColor = FromRGB(52, 255, 164)
+		})
     end
 
-    Library.RefreshConfigsList = function(self, Element)
-        local CurrentList = { }
-        local List = { }
-
-        local ConfigFolderName = StringGSub(Library.Folders.Configs, Library.Folders.Directory .. "/", "")
-
-        for Index, Value in listfiles(Library.Folders.Configs) do
-            local FileName = StringGSub(Value, Library.Folders.Directory .. "\\" .. ConfigFolderName .. "\\", "")
-            List[Index] = FileName
-        end
-
-        local IsNew = #List ~= CurrentList
-
-        if not IsNew then
-            for Index = 1, #List do
-                if List[Index] ~= CurrentList[Index] then
-                    IsNew = true
-                    break
-                end
-            end
-        else
-            CurrentList = List
-            Element:Refresh(CurrentList)
-        end
-    end
+	Library.RefreshConfigsList = function(self, Element)
+	    local list = {}
+	
+	    for _, path in pairs(listfiles(Library.Folders.Configs)) do
+	        local name = path:match("[^\\/]+$"):gsub("%.json$", "")
+	        table.insert(list, name)
+	    end
+	
+	    table.sort(list)
+	
+	    local isNew = #list ~= #CurrentList
+	    if not isNew then
+	        for i = 1, #list do
+	            if list[i] ~= CurrentList[i] then
+	                isNew = true
+	                break
+	            end
+	        end
+	    end
+	
+	    if isNew then
+	        CurrentList = list
+	        Element:Refresh(list)
+	    end
+	end
 
     Library.ChangeItemTheme = function(self, Item, Properties)
         Item = Item.Instance or Item
