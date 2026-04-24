@@ -2188,12 +2188,12 @@ local Library do
     Library.Theme = TableClone(Themes["Preset"])
     Library.Themes = Themes
 
-    if not isfile(Library.Folders.Directory .. "/AutoLoadConfig (do not modify this).json") then
-        writefile(Library.Folders.Directory .. "/AutoLoadConfig (do not modify this).json", "")
+    if not isfile(Library.Folders.Directory .. "/AutoLoadConfig.json") then
+        writefile(Library.Folders.Directory .. "/AutoLoadConfig.json", "")
     end
 
-    if not isfile(Library.Folders.Directory .. "/AutoLoadTheme (do not modify this).json") then
-        writefile(Library.Folders.Directory .. "/AutoLoadTheme (do not modify this).json", "")
+    if not isfile(Library.Folders.Directory .. "/AutoLoadTheme.json") then
+        writefile(Library.Folders.Directory .. "/AutoLoadTheme.json", "")
     end
 
     Library.Holder = Instances:Create("ScreenGui", {
@@ -2445,6 +2445,10 @@ local Library do
 
 	Library.RefreshConfigsList = function(self, Element)
 	    local list = {}
+	
+	    if not isfolder(Library.Folders.Configs) then
+	        makefolder(Library.Folders.Configs)
+	    end
 	
 	    for _, path in pairs(listfiles(Library.Folders.Configs)) do
 	        local name = path:match("[^\\/]+$"):gsub("%.json$", "")
@@ -10039,8 +10043,15 @@ local Library do
     end
 
     Library.Init = function(self)
-        local AutoloadConfig = readfile(Library.Folders.Directory .. "/AutoLoadConfig (do not modify this).json")
-        local AutoloadTheme = readfile(Library.Folders.Directory .. "/AutoLoadTheme (do not modify this).json")
+		if not isfolder(Library.Folders.Directory) then
+		    makefolder(Library.Folders.Directory)
+		end
+		
+		if not isfolder(Library.Folders.Configs) then
+		    makefolder(Library.Folders.Configs)
+		end
+        local AutoloadConfig = readfile(Library.Folders.Directory .. "/AutoLoadConfig.json")
+        local AutoloadTheme = readfile(Library.Folders.Directory .. "/AutoLoadTheme.json")
         
         if AutoloadConfig ~= "" then
             local Success, Result = Library:LoadConfig(AutoloadConfig)
