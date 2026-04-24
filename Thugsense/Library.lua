@@ -5183,7 +5183,7 @@ local Library do
             local ConfigsSection = SettingsTab:Section({Name = "Profiles", Side = 1})
         
             for Index, Value in Library.Theme do 
-                SettingsSection:Label(Index, "Left"}:Colorpicker({ Name = Index, Default = Value, Flag = "Theme"..Index, Callback = function(Color) 
+                SettingsSection:Label(Index, "Left"):Colorpicker({ Name = Index, Default = Value, Flag = "Theme"..Index, Callback = function(Color) 
                     Library.Theme[Index] = Color
                     Library:ChangeTheme(Index, Color)
                 end})
