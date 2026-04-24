@@ -1127,7 +1127,9 @@ local Library do
         function Watermark:SetVisibility(Bool)
             Items["Watermark"].Instance.Visible = Bool
         end
-        
+		function Watermark:SetText(Text)
+			Items["Title"].Instance.Text = Text
+		end
         return Watermark
     end
     Library.Notification = function(self, Data)
