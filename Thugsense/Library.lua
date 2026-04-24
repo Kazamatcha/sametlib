@@ -2112,7 +2112,7 @@ local Library do
                 FontFace = Library.Font,
                 TextColor3 = FromRGB(235, 157, 255),
                 BorderColor3 = FromRGB(0, 0, 0),
-                Text = "Toggle",
+                Text = "toggle",
                 AutoButtonColor = false,
                 Name = "\0",
                 BorderSizePixel = 0,
@@ -2175,9 +2175,9 @@ local Library do
         end
 
         local Modes = {
-            ["Toggle"] = Items["Toggle"],
-            ["Hold"] = Items["Hold"],
-            ["Always"] = Items["Always"]
+            ["toggle"] = Items["Toggle"],
+            ["hold"] = Items["Hold"],
+            ["always"] = Items["Always"]
         }
 
         local Update = function()
@@ -2252,7 +2252,7 @@ local Library do
                 if Data.Callback then 
                     Library:SafeCall(Data.Callback, Keybind.Toggled)
                 end
-           elseif TableFind({"Toggle", "Hold", "Always"}, Key) then 
+           elseif TableFind({"toggle", "hold", "always"}, Key) then 
                 Keybind.Mode = Key
                 
                 Keybind:SetMode(Key)
@@ -2268,8 +2268,8 @@ local Library do
                     Keybind.Mode = Key.Mode
                     Keybind:SetMode(Key.Mode)
                 else
-                    Keybind.Mode = "Toggle"
-                    Keybind:SetMode("Toggle")
+                    Keybind.Mode = "toggle"
+                    Keybind:SetMode("toggle")
                 end
 
                 local KeyString = Keys[Keybind.Key] or StringGSub(tostring(RealKey), "Enum.", "") or RealKey
@@ -2303,7 +2303,7 @@ local Library do
                 end
             end
 
-            if Keybind.Mode == "Always" then 
+            if Keybind.Mode == "always" then 
                 Keybind.Toggled = true
             else
                 Keybind.Toggled = false
@@ -2323,11 +2323,11 @@ local Library do
         end
 
         function Keybind:Press(Bool)
-            if Keybind.Mode == "Toggle" then
+            if Keybind.Mode == "toggle" then
                 Keybind.Toggled = not Keybind.Toggled
-            elseif Keybind.Mode == "Hold" then
+            elseif Keybind.Mode == "hold" then
                 Keybind.Toggled = Bool
-            elseif Keybind.Mode == "Always" then
+            elseif Keybind.Mode == "always" then
                 Keybind.Toggled = true
             end
 
@@ -2373,9 +2373,9 @@ local Library do
 
         Library:Connect(UserInputService.InputBegan, function(Input)
             if tostring(Input.KeyCode) == Keybind.Key or tostring(Input.UserInputType) == Keybind.Key then
-                if Keybind.Mode == "Toggle" then 
+                if Keybind.Mode == "toggle" then 
                     Keybind:Press()
-                elseif Keybind.Mode == "Hold" then 
+                elseif Keybind.Mode == "hold" then 
                     Keybind:Press(true)
                 end
             end
@@ -2402,24 +2402,24 @@ local Library do
         end)
 
         Items["Toggle"]:Connect("MouseButton1Down", function()
-            Keybind.Mode = "Toggle"
-            Keybind:SetMode("Toggle")
+            Keybind.Mode = "toggle"
+            Keybind:SetMode("toggle")
         end)
 
         Items["Always"]:Connect("MouseButton1Down", function()
-            Keybind.Mode = "Always"
-            Keybind:SetMode("Always")
+            Keybind.Mode = "always"
+            Keybind:SetMode("always")
         end)
 
         Items["Hold"]:Connect("MouseButton1Down", function()
-            Keybind.Mode = "Hold"
-            Keybind:SetMode("Hold")
+            Keybind.Mode = "hold"
+            Keybind:SetMode("hold")
         end)
 
         if Data.Default then 
             Keybind:Set({
                 Key = Data.Default,
-                Mode = Data.Mode or "Toggle"
+                Mode = Data.Mode or "toggle"
             })
         end
 
@@ -3726,7 +3726,7 @@ local Library do
             Page = self.Page,
             Section = self,
 
-            Name = Data.Name or Data.name or "Toggle",
+            Name = Data.Name or Data.name or "toggle",
             Flag = Data.Flag or Data.flag or Library:NextFlag(),
             Default = Data.Default or Data.default or false,
             Callback = Data.Callback or Data.callback or function() end,
