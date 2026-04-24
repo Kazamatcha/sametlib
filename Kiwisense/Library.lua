@@ -2352,8 +2352,6 @@ local Library do
         self.ThemeMap[Item] = ThemeData
     end
 
-	local CurrentList = {}
-	
 	Library.GetConfig = function(self)
 	    local config = {}
 	
@@ -2426,17 +2424,24 @@ local Library do
 	    end
     end
 
-    Library.SaveConfig = function(self, name)
-	    local path = Library.Folders.Configs .. "/" .. name .. ".json"
+	Library.SaveConfig = function(self, name)
+	    local folder = Library.Folders.Configs
+	    local path = folder .. "/" .. name .. ".json"
+	
+	    if not isfolder(folder) then
+	        makefolder(folder)
+	    end
+	
+	    local existed = isfile(path)
+	
 	    writefile(path, Library:GetConfig())
-		Library:Notification({
-			Name = "Success",
-			Description = "Succesfully saved config: ".. name .. ".json",
-			Duration = 5,
-			Icon = "116339777575852",
-			IconColor = FromRGB(52, 255, 164)
-		})
-    end
+	
+	    Library:Notification({
+	        Name = "Success",
+	        Description = (existed and "Overwritten: " or "Created: ") .. name,
+	        Duration = 5
+	    })
+	end
 
 	Library.RefreshConfigsList = function(self, Element)
 	    local list = {}
@@ -2447,21 +2452,7 @@ local Library do
 	    end
 	
 	    table.sort(list)
-	
-	    local isNew = #list ~= #CurrentList
-	    if not isNew then
-	        for i = 1, #list do
-	            if list[i] ~= CurrentList[i] then
-	                isNew = true
-	                break
-	            end
-	        end
-	    end
-	
-	    if isNew then
-	        CurrentList = list
-	        Element:Refresh(list)
-	    end
+	    Element:Refresh(list)
 	end
 
     Library.ChangeItemTheme = function(self, Item, Properties)
