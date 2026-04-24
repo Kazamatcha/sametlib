@@ -13,7 +13,7 @@
     function Window:Page(Data: table
         Name/name: string,
         Columns/columns: number,
-        SubTabs/subtabs: boolean
+        SubPages/SubPages: boolean
     )
 
     function Page:SubPage(Data: table
@@ -2697,7 +2697,7 @@ local Library do
             Name = Data.Name or Data.name or "Page",
             Columns = Data.Columns or Data.columns or 2,
 
-            HasSubtabs = Data.Subtabs or Data.subtabs or false,
+            SubPages = Data.SubPages or Data.subpages or false,
 
             Active = false,
             ColumnsData = { },
@@ -2802,7 +2802,7 @@ local Library do
                 Visible = false
             })
             
-            if not Page.HasSubtabs then 
+            if not Page.SubPages then 
                 Instances:Create("UIListLayout", {
                     Parent = Items["Page"].Instance,
                     FillDirection = Enum.FillDirection.Horizontal,
@@ -5174,7 +5174,7 @@ local Library do
     end
 
     Library.CreateSettingsPage = function(self, Window, Watermark, KeybindList)
-        local SettingsTab = Window:Page({Name = "Settings", Columns = 2, Subtabs = false})
+        local SettingsTab = Window:Page({Name = "Settings", Columns = 2, SubPages = false})
 
         do -- Settings Tab
             local SettingsSection = SettingsTab:Section({Name = "Settings", Side = 2})
