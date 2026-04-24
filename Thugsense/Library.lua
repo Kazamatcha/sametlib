@@ -197,15 +197,15 @@ local Library do
         Flags = { },
         
         Theme = {
-            ["Background"] = FromHex("#14100f"),
-            ["Inline"] = FromHex("#191614"),
-            ["Page Background"] = FromHex("#28201e"),
-            ["Border"] = FromHex("#120f0e"),
-            ["Outline"] = FromHex("#211c1b"),
-            ["Accent"] = FromHex("#ffb29d"),
-            ["Element"] = FromHex("#242221"),
-            ["Hovered Element"] = FromHex("#322f2f"),
-            ["Text"] = FromHex("#979797"),
+            ["Background"] = FromHex("#1a1c16"),
+            ["Inline"] = FromHex("#22251d"),
+            ["Page Background"] = FromHex("#2e3524"),
+            ["Border"] = FromHex("#1f2319"),
+            ["Outline"] = FromHex("#3a422c"),
+            ["Accent"] = FromHex("#8fc93a"),
+            ["Element"] = FromHex("#2c3223"),
+            ["Hovered Element"] = FromHex("#3e4632"),
+            ["Text"] = FromHex("#e6ddb3"),
             ["Text Border"] = FromRGB(0, 0, 0)
         },
 
@@ -218,9 +218,9 @@ local Library do
         },
 
         Folders = {
-            Directory = "scriptname",
-            Configs = "scriptname/Configs",
-            Assets = "scriptname/Assets"
+            Directory = "matcha latte",
+            Configs = "matcha latte/Configs",
+            Assets = "matcha latte/Assets"
         },
 
         Images = { -- you're welcome to reupload the images and replace it with your own links
@@ -5180,11 +5180,11 @@ local Library do
                 Library.MenuKeybind = Library.Flags["Menu Keybind"].Key
             end})
         
-            SettingsSection:Toggle({Name = "Watermark", Flag = "Watermark", Default = false, Callback = function(Value)
+            SettingsSection:Toggle({Name = "Watermark", Flag = "Watermark", Default = true, Callback = function(Value)
                 Watermark:SetVisibility(Value)
             end})
         
-            SettingsSection:Toggle({Name = "Keybind List", Flag = "Keybind List", Default = false, Callback = function(Value)
+            SettingsSection:Toggle({Name = "Keybind List", Flag = "Keybind List", Default = true, Callback = function(Value)
                 KeybindList:SetVisibility(Value)
             end})
         
@@ -5199,7 +5199,38 @@ local Library do
             SettingsSection:Slider({Name = "Tweening Time", Min = 0, Max = 5, Default = 0.25, Decimals = 0.01, Flag = "Tweening Time", Callback = function(Value)
                 Library.Tween.Time = Value
             end})
-        
+            SettingsSection:Button({
+                Name = "Rejoin",
+                Callback = function()
+                    game:GetService("TeleportService"):Teleport(game.PlaceId, Players.LocalPlayer)
+                end
+            })
+            SettingsSection:Button({
+                Name = "Join new server",
+                Callback = function()
+	                local HttpService = game:GetService("HttpService")
+	                local TP = game:GetService("TeleportService")
+	
+	                local servers = HttpService:JSONDecode(
+	                    game:HttpGet(
+	                        "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"
+	                    )
+	                )
+	
+	                for _, v in pairs(servers.data) do
+	                    if v.playing < v.maxPlayers then
+	                        TP:TeleportToPlaceInstance(game.PlaceId, v.id)
+	                        break
+	                    end
+	                end
+                end
+            })
+            SettingsSection:Button({
+                Name = "Copy join script",
+                Callback = function()
+                    setclipboard('game:GetService("TeleportService"):Teleport('..game.PlaceId..')')
+                end
+            })
             SettingsSection:Button({Name = "Notification test", Callback = function()
                 Library:Notification("This is a notification This is a notification This is a notification This is a notification", 5, Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)))
             end})
