@@ -5199,6 +5199,14 @@ local Library do
             SettingsSection:Slider({Name = "Tweening Time", Min = 0, Max = 5, Default = 0.25, Decimals = 0.01, Flag = "Tweening Time", Callback = function(Value)
                 Library.Tween.Time = Value
             end})
+			SettingsSection:Dropdown({
+				Name = "Notify When",
+				Flag = "NotifyWhen",
+				Items = {"When Toggle", "When Select Target", "When Target Lost Health", "When Toggle Keybind"},
+				Default = {"When Toggle", "When Select Target"},
+				Multi = true,
+				Callback = function() end
+			})
             SettingsSection:Button({
                 Name = "Rejoin",
                 Callback = function()
