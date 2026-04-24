@@ -4569,7 +4569,7 @@ local Library do
             end
 
             for Index, Value in List do 
-                Dropdown:Add(Value)
+                Dropdown:AddOption(Value)
             end
         end
 
