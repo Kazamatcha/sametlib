@@ -4626,7 +4626,7 @@ local Library do
         end
 
         for Index, Value in Dropdown.Items do 
-            Dropdown:Add(Value)
+            Dropdown:AddOption(Value)
         end
 
         Items["Open"]:Connect("MouseButton1Down", function()
