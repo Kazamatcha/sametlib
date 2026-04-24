@@ -7059,7 +7059,7 @@ local Library do
             return Watermark 
         end
 
-        Library.KeybindsList = function(self)
+        Library.KeybindList = function(self)
             local KeybindList = { }
             self.KeyList = KeybindList
 
