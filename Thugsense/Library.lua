@@ -5183,13 +5183,13 @@ local Library do
             local ConfigsSection = SettingsTab:Section({Name = "Profiles", Side = 1})
         
             for Index, Value in Library.Theme do 
-                SettingsSection:Label(Index, "Left"}):Colorpicker({ Name = Index, Default = Value, Flag = "Theme"..Index, Callback = function(Color) 
+                SettingsSection:Label(Index, "Left"}:Colorpicker({ Name = Index, Default = Value, Flag = "Theme"..Index, Callback = function(Color) 
                     Library.Theme[Index] = Color
                     Library:ChangeTheme(Index, Color)
                 end})
             end
         
-            SettingsSection:Label({"Menu Keybind", "Left"}):Keybind({Name = "Menu Keybind", Flag = "Menu Keybind", Default = Enum.KeyCode.RightControl, Mode = "Toggle", Callback = function(Value)
+            SettingsSection:Label("Menu Keybind", "Left"):Keybind({Name = "Menu Keybind", Flag = "Menu Keybind", Default = Enum.KeyCode.RightControl, Mode = "Toggle", Callback = function(Value)
                 Library.MenuKeybind = Library.Flags["Menu Keybind"].Key
             end})
         
