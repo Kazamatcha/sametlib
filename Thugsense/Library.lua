@@ -1130,8 +1130,16 @@ local Library do
         
         return Watermark
     end
-
-    Library.Notification = function(self, Text, Duration, Color, Icon)
+    Library.Notification = function(self, Data)
+		Data = Data or { }
+										
+		local Notification = {
+			Name = Data.Name or Data.name or "Title",
+			Description = Data.Description or Data.description or "Description",
+			Duration = Data.Duration or Data.duration or 5,
+			Icon = Data.Icon or Data.icon or "9080568477801",
+			IconColor = Data.IconColor or Data.iconcolor or FromRGB(255, 255, 255),
+		}
         local Items = { } do
             Items["Notification"] = Instances:Create("Frame", {
                 Parent = Library.NotifHolder.Instance,
@@ -1163,7 +1171,7 @@ local Library do
                 FontFace = Library.Font,
                 TextColor3 = FromRGB(215, 215, 215),
                 BorderColor3 = FromRGB(0, 0, 0),
-                Text = Text,
+                Text = Notification.Description,
                 Name = "\0",
                 Size = UDim2New(1, 0, 0, 15),
                 BackgroundTransparency = 1,
@@ -1187,7 +1195,7 @@ local Library do
                 BorderColor3 = FromRGB(0, 0, 0),
                 Size = UDim2New(1, 13, 0, 2),
                 BorderSizePixel = 0,
-                BackgroundColor3 = Color
+                BackgroundColor3 = Notification.IconColor
             })  
             
             Instances:Create("UIGradient", {
@@ -1210,13 +1218,17 @@ local Library do
                 BackgroundColor3 = FromRGB(255, 255, 255)
             }) 
 
-            if not Icon then 
-                Items["Icon"]:Clean()
-                Items["Title"].Instance.Position = UDim2New(0, 1, 0, 2)
-            else
-                Items["Icon"].Instance.Image = Icon[1]
-                Items["Icon"].Instance.ImageColor3 = Icon[2] or FromRGB(255, 255, 255)
-            end
+			if not Icon then 
+			    Items["Icon"]:Clean()
+			    Items["Title"].Instance.Position = UDim2.new(0, 1, 0, 2)
+			else
+			    Items["Icon"].Instance.Image = "rbxassetid://"..Icon
+			    if Notification.IconColor then
+			        Items["Icon"].Instance.ImageColor3 = Notification.IconColor
+			    else
+			        Items["Icon"].Instance.ImageColor3 = Color3.fromRGB(255, 255, 255)
+			    end
+			end
         end
 
         Items["Notification"].Instance.BackgroundTransparency = 1
@@ -1250,7 +1262,7 @@ local Library do
                 end
             end
 
-            task.delay(Duration + 0.1, function()
+            task.delay(Notification.Duration + 0.1, function()
                 for Index, Value in Items["Notification"].Instance:GetDescendants() do
                     if Value:IsA("UIStroke") then
                         Tween:Create(Value, nil, {Transparency = 1}, true)
@@ -4428,7 +4440,7 @@ local Library do
             Items["Dropdown"].Instance.Visible = Bool
         end
 
-        function Dropdown:Add(Option)
+        function Dropdown:AddOption(Option)
             local OptionButton = Instances:Create("TextButton", {
                 Parent = Items["OptionHolder"].Instance,
                 FontFace = Library.Font,
@@ -4543,7 +4555,7 @@ local Library do
             return OptionData
         end
 
-        function Dropdown:Remove(Option)
+        function Dropdown:RemoveOption(Option)
             if Dropdown.Options[Option] then 
                 Dropdown.Options[Option].Button:Clean()
             end
@@ -4644,16 +4656,15 @@ local Library do
         return Dropdown
     end
 
-    Library.Sections.Label = function(self, Data)
-        Data = Data or { }
+    Library.Sections.Label = function(self, Text, Alignment)
 
         local Label = {
             Window = self.Window,
             Page = self.Page,
             Section = self,
 
-            Name = Data.Name or Data.name,
-            Alignment = Data.Alignment or Data.alignment or "Left",
+            Name = Text or "Label",
+            Alignment = Alignment or "Left",
 
             Count = 0
         }
