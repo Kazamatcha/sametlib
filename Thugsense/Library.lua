@@ -1195,7 +1195,7 @@ local Library do
                 BorderColor3 = FromRGB(0, 0, 0),
                 Size = UDim2New(1, 13, 0, 2),
                 BorderSizePixel = 0,
-                BackgroundColor3 = Library.Theme.Accent
+                BackgroundColor3 = Library.Theme.Accent --thay color cung duoc
             })  
             
             Instances:Create("UIGradient", {
