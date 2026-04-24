@@ -1195,7 +1195,7 @@ local Library do
                 BorderColor3 = FromRGB(0, 0, 0),
                 Size = UDim2New(1, 13, 0, 2),
                 BorderSizePixel = 0,
-                BackgroundColor3 = Notification.IconColor
+                BackgroundColor3 = Library.Theme.Accent
             })  
             
             Instances:Create("UIGradient", {
