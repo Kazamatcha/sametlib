@@ -5253,7 +5253,7 @@ local Library do
                 end
             })
             SettingsSection:Button({Name = "Notification test", Callback = function()
-                Library:Notification("This is a notification This is a notification This is a notification This is a notification", 5, Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)))
+                Library:Notification({ Description = "This is a notification",Duration = 5})
             end})
         
             SettingsSection:Button({Name = "Unload library", Callback = function()
@@ -5277,7 +5277,7 @@ local Library do
         
                     Library:RefreshConfigsList(ConfigsListbox)
                 else
-                    Library:Notification("Config '" .. ConfigName .. ".json' already exists", 3, Color3.FromR(255, 0, 0))
+                    Library:Notification({Description = "Config '" .. ConfigName .. ".json' already exists",Duration = 3})
                     return
                 end
             end})
