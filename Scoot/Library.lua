@@ -2603,11 +2603,11 @@ local Library do
 
             function Dropdown:Refresh(List)
                 for Index, Value in Dropdown.Options do 
-                    Dropdown:Remove(Value.Name)
+                    Dropdown:RemoveOption(Value.Name)
                 end
 
                 for Index, Value in List do 
-                    Dropdown:Add(Value)
+                    Dropdown:AddOption(Value)
                 end
             end
 
@@ -2640,7 +2640,7 @@ local Library do
             end)
 
             for Index, Value in Data.Items do 
-                Dropdown:Add(Value)
+                Dropdown:AddOption(Value)
             end
 
             if Data.Default then 
@@ -4725,11 +4725,11 @@ local Library do
 
             function Dropdown:Refresh(List)
                 for Index, Value in Dropdown.Options do 
-                    Dropdown:Remove(Value.Name)
+                    Dropdown:RemoveOption(Value.Name)
                 end
 
                 for Index, Value in List do 
-                    Dropdown:Add(Value)
+                    Dropdown:AddOption(Value)
                 end
             end
 
@@ -4769,7 +4769,7 @@ local Library do
             end)
 
             for Index, Value in Data.Items do 
-                Dropdown:Add(Value)
+                Dropdown:AddOption(Value)
             end
 
             if Data.Default then 
