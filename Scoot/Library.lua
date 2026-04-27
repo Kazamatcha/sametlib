@@ -230,8 +230,8 @@ local Library do
 		    ["Outline"] = FromRGB(42, 49, 45),
 		    ["Element"] = FromRGB(30, 36, 31),
 		    ["Gradient"] = FromRGB(250, 248, 245), -- No real gradient, just base color
-		    ["Text"] = FromRGB(80, 80, 80),
-		    ["Text Stroke"] = FromRGB(255, 255, 255), -- White stroke for light theme
+            ["Text"] = FromRGB(235, 235, 235),
+            ["Text Stroke"] = FromRGB(0, 0, 0),
 		    ["Placeholder Text"] = FromRGB(120, 120, 120),
 		    ["Accent"] = FromRGB(147, 179, 141) -- Matcha green
 		}
