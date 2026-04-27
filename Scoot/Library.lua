@@ -4627,7 +4627,7 @@ local Library do
                 end
             end
 
-            function Dropdown:Add(Option)
+            function Dropdown:AddOption(Option)
                 local OptionButton = Instances:Create("TextButton", {
                     Parent = Items["List"].Instance,
                     Name = "\0",
@@ -4714,7 +4714,7 @@ local Library do
                 return OptionData
             end
 
-            function Dropdown:Remove(Option)
+            function Dropdown:RemoveOption(Option)
                 if not Dropdown.Options[Option] then
                     return
                 end
@@ -4858,32 +4858,6 @@ local Library do
 	    function Watermark:SetVisibility(Bool)
 	        Items["Watermark"].Instance.Visible = Bool
 	    end
-	
-	    -- FPS COUNTER
-	    local fps = 0
-	    RunService.RenderStepped:Connect(function()
-	        fps += 1
-	    end)
-	
-	    -- AUTO UPDATE 0.5s
-	    task.spawn(function()
-	        while true do
-	            local ping = math.floor(
-	                Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
-	            )
-	
-	            Watermark:Set(
-	                string.format(
-	                    "Matcha.Vhuy | Ms: %d | Fps: %d",
-	                    ping,
-	                    fps * 2 -- vì update 0.5s
-	                )
-	            )
-	
-	            fps = 0
-	            task.wait(0.5)
-	        end
-	    end)
 	
 	    return Watermark
 	end
