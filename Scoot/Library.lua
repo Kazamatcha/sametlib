@@ -5016,7 +5016,16 @@ local Library do
         return KeybindList
     end
 
-    Library.Notification = function(self, Title, Description, Duration)
+    Library.Notification = function(self, Data)
+		Data = Data or { }
+										
+		local Notification = {
+			Name = Data.Name or Data.name or "Title",
+			Description = Data.Description or Data.description or "Description",
+			Duration = Data.Duration or Data.duration or 5,
+			Icon = Data.Icon or Data.icon or "9080568477801",
+			IconColor = Data.IconColor or Data.iconcolor or FromRGB(255, 255, 255),
+		}
         local Items = { } do 
             Items["Notification"] = Instances:Create("Frame", {
                 Parent = Library.NotifHolder.Instance,
@@ -5051,7 +5060,7 @@ local Library do
                 FontFace = Library.Font,
                 TextColor3 = FromRGB(235, 235, 235),
                 BorderColor3 = FromRGB(0, 0, 0),
-                Text = Title,
+                Text = Notification.Name,
                 BackgroundTransparency = 1,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BorderSizePixel = 0,
@@ -5068,7 +5077,7 @@ local Library do
                 FontFace = Library.Font,
                 TextColor3 = FromRGB(235, 235, 235),
                 TextTransparency = 0.4000000059604645,
-                Text = Description,
+                Text = Notification.Description,
                 Position = UDim2New(0, 0, 0, 15),
                 BorderSizePixel = 0,
                 BackgroundTransparency = 1,
