@@ -2500,7 +2500,7 @@ local Library do
                 end
             end
 
-            function Dropdown:Add(Option)
+            function Dropdown:AddOption(Option)
                 local OptionButton = Instances:Create("TextButton", {
                     Parent = Items["OptionHolder"].Instance,
                     Name = "\0",
@@ -2592,7 +2592,7 @@ local Library do
                 return OptionData
             end
 
-            function Dropdown:Remove(Option)
+            function Dropdown:RemoveOption(Option)
                 if not Dropdown.Options[Option] then
                     return
                 end
