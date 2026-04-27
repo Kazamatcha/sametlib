@@ -5214,7 +5214,7 @@ local Library do
             end})
 			SettingsSection:Dropdown({
 				Name = "Notify When",
-				Flag = "NotifyWhen",
+				Flag = "Notify_When",
 				Items = {"When Toggle", "When Select Target", "When Target Lost Health", "When Toggle Keybind"},
 				Default = {"When Toggle", "When Select Target"},
 				Multi = true,
