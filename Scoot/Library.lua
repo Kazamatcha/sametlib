@@ -222,13 +222,13 @@ local Library do
 
     local Themes = {
 		["Preset"] = {
-		    ["Background"] = FromRGB(250, 248, 245), -- Soft cream
-		    ["Border"] = FromRGB(220, 218, 215),
-		    ["Inline"] = FromRGB(255, 255, 255),
-		    ["Hovered Element"] = FromRGB(200, 220, 195), -- Light matcha
-		    ["Page Background"] = FromRGB(250, 248, 245),
-		    ["Outline"] = FromRGB(220, 218, 215),
-		    ["Element"] = FromRGB(255, 255, 255),
+		    ["Background"] = FromRGB(14, 17, 15), -- Soft cream
+		    ["Border"] = FromRGB(12, 12, 12),
+		    ["Inline"] = FromRGB(20, 24, 21),
+		    ["Hovered Element"] = FromRGB(37, 42, 45), -- Light matcha
+		    ["Page Background"] = FromRGB(25, 30, 26),
+		    ["Outline"] = FromRGB(42, 49, 45),
+		    ["Element"] = FromRGB(30, 36, 31),
 		    ["Gradient"] = FromRGB(250, 248, 245), -- No real gradient, just base color
 		    ["Text"] = FromRGB(80, 80, 80),
 		    ["Text Stroke"] = FromRGB(255, 255, 255), -- White stroke for light theme
@@ -4851,7 +4851,7 @@ local Library do
 	    end
 	
 	    -- SET TEXT
-	    function Watermark:Set(Text)
+	    function Watermark:SetText(Text)
 	        Items["Text"].Instance.Text = Text
 	    end
 	
