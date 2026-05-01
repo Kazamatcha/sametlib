@@ -2487,8 +2487,8 @@ local Library do
                 Name = "\0",
                 Size = UDim2New(1, 0, 0, 15),
                 BackgroundTransparency = 1,
-                TextXAlignment = Enum.TextXAlignment.Left,
-                Position = UDim2New(0, 6, 0, 1),
+                TextXAlignment = Enum.TextXAlignment.Center,
+                Position = UDim2New(0, 0, 0, 0),
                 BorderSizePixel = 0,
                 TextSize = 12,
                 BackgroundColor3 = FromRGB(255, 255, 255)
